@@ -1,6 +1,5 @@
 """Models for Lokahi web app."""
 
-from socketserver import ThreadingTCPServer
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -16,7 +15,7 @@ class User(db.Model):
                         nullable= False)
     fname = db.Column(db.String(30), nullable= False)
     lname = db.Column(db.String(30), nullable= True)
-    email = db.Column(db.String(50), nullable= False)
+    email = db.Column(db.String(50), unique= True, nullable= False)
     password = db.Column(db.String, nullable= False)
     profile_img = db.Column(db.String, nullable= True)
 
@@ -41,15 +40,16 @@ class Trip(db.Model):
     trip_name = db.Column(db.String(50), nullable= False)
     trip_country = db.Column(db.String(30), nullable= False)
     trip_city = db.Column(db.String(30), nullable= False)
-    start_date = db.Column(db.DateTime, nullable= False)
-    end_date = db.Column(db.DateTime, nullable= False)
+    start_date = db.Column(db.Date, nullable= False)
+    end_date = db.Column(db.Date, nullable= False)
     trip_img = db.Column(db.String, nullable= True)
 
     user = db.relationship("User", back_populates="trips")
-    places = db.relationship("Place", back_populates="trips")
+    places = db.relationship("Place", back_populates="trip")
+    activities = db.relationship("Trip", back_populates="trip")
 
     def __repr__(self):
-        return f"<Trip trip_id={self.trip_id}>"
+        return f"<Trip trip_id={self.trip_id} trip_name={self.trip_name} trip_city ={self.trip_city}>"
 
 class Place(db.Model):
     """Saved place data"""
@@ -69,24 +69,24 @@ class Place(db.Model):
     place_name = db.Column(db.String(50), nullable= False)
     place_country = db.Column(db.String(30), nullable= False)
     place_city = db.Column(db.String(30), nullable= False)
-    in_plan = db.Column(db.Boolean, nullable= False)
+    in_itinerary = db.Column(db.Boolean, nullable= False)
     category = db.Column(db.String(30), nullable= False)
     latitude = db.Column(db.Float, nullable= False)
     longitude = db.Column(db.Float, nullable= False)
 
     user = db.relationship("User", back_populates="places")
-    trips = db.relationship("Trip", back_populates="places")
-    plans = db.relationship("Plan", back_populates= "places")
+    trip = db.relationship("Trip", back_populates="places")
+    activity = db.relationship("Activity", uselist= False, back_populates= "place")
 
     def __repr__(self):
-        return f"<Place place_id={self.place_id}>"
+        return f"<Place place_id={self.place_id} place_name={self.place_name}>"
 
-class Plan(db.Model):
-    """Itinerary data"""
+class Activity(db.Model):
+    """Activity data"""
 
-    __tablename__ = "plans"
+    __tablename__ = "activities"
 
-    plan_id = db.Column(db.Integer,
+    activity_id = db.Column(db.Integer,
                         autoincrement= True,
                         primary_key= True,
                         nullable= False)
@@ -98,14 +98,11 @@ class Plan(db.Model):
                         nullable= False)
     activity_datetime = db.Column(db.DateTime)
 
-    places = db.relationship("Place", back_populates="plans")
-    trips = db.relationship("Trip", back_populates="plans")
+    place = db.relationship("Place", uselist= False, back_populates="activity")
+    trip = db.relationship("Trip", back_populates="activities")
 
     def __repr__(self):
-        return f"<Plan plan_id={self.plan_id}>"
-
-
-
+        return f"<Activity activity_id={self.activity_id} place_name={self.place.place_name}>"
 
 
 
