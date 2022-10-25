@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Hey There!{% endblock %}
+
+{% block body %}
+<div class="welcome">
+    <h1>
+        Welcome, {{ first-name }}
+    </h1>
+</div>
+
+<div>
+    <a href="/new_trip">Create new trip</a>
+</div>
+
+<div>
+    <a href="/trip_planner">Go to Trip Planner</a>
+</div>
+
+<div>
+    <h2>Upcoming Trips:</h2>
+</div>
+
+<div>
+    <h2>Past Trips:</h2>
+</div>
+
+{% endblock %}

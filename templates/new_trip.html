@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Create New Trip{% endblock %}
+
+{% block body %}
+
+<div class="new-trip">
+    <h1>Create New Trip:</h1>
+    <form action="/trip_planner/<trip_id>">
+        <p>
+          Country <input type="trip-country" name="trip-country">
+        </p>
+      
+        <p>
+          City <input type="trip-city" name="trip-city">
+        </p>
+      
+        <p>
+          Start Date <input type="start-date" name="start-date">
+        </p>
+      
+        <p>
+          End Date <input type="end-date" name="end-date">
+        </p>
+      
+        <p>
+          <input type="submit" value="Create Trip">
+        </p>
+      </form> 
+</div>
+
+{% endblock %}
