@@ -31,12 +31,13 @@ def login_user():
     match = crud.check_email_and_pass(email, password)
 
     if not match:
-        flash("This email is not correct. Check again.")
+        flash("This email doesn't match anything in our system.")
+        return redirect("/login")
     else:
         session["user_email"]=match.email
         flash("Logged in!")
     
-    return redirect("/user_profile")
+        return redirect("/user_profile/<user_id>")
 
 @app.route('/user_profile/<user_id>')
 def show_user_profile():
@@ -53,7 +54,7 @@ def create_new_user():
     fname = request.form.get("first-name")
     lname = request.form.get("last-name")
 
-    user = crud.get_user_by_email(email)
+    user = crud.get_user_id(email)
 
     if user:
         flash("An account with this email already exists.")
@@ -63,7 +64,7 @@ def create_new_user():
         db.session.commit()
         flash("Account created successfully. Please log in.")
     
-    return redirect("/user_profile")
+        return render_template("user_profile.html", first_name=fname)
 
 if __name__ == "__main__":
     connect_to_db(app)

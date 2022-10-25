@@ -15,9 +15,9 @@ def check_email_and_pass(email, password):
     return User.query.filter(User.password == password, 
                             User.email == email).first()
 
-def get_user_id(email, user_id):
-    email =  User.query.filter(User.email == email).first()
-    return User.query.get(user_id)
+def get_user_id(email):
+    if User.query.filter(User.email).first() == email:
+        return User.query.filter(User.user_id).first()
 
 
 if __name__ == '__main__':

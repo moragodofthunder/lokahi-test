@@ -46,7 +46,7 @@ class Trip(db.Model):
 
     user = db.relationship("User", back_populates="trips")
     places = db.relationship("Place", back_populates="trip")
-    activities = db.relationship("Trip", back_populates="trip")
+    activities = db.relationship("Activity", back_populates="trip")
 
     def __repr__(self):
         return f"<Trip trip_id={self.trip_id} trip_name={self.trip_name} trip_city ={self.trip_city}>"
@@ -86,12 +86,8 @@ class Activity(db.Model):
 
     __tablename__ = "activities"
 
-    activity_id = db.Column(db.Integer,
-                        autoincrement= True,
-                        primary_key= True,
-                        nullable= False)
     place_id = db.Column(db.Integer,
-                        db.ForeignKey("places.place_id"),
+                        db.ForeignKey("places.place_id"), primary_key=True,
                         nullable= False)
     trip_id = db.Column(db.Integer,
                         db.ForeignKey("trips.trip_id"),
@@ -106,7 +102,7 @@ class Activity(db.Model):
 
 
 
-def connect_to_db(flask_app, db_uri="postgresql:///ratings", echo=True):
+def connect_to_db(flask_app, db_uri="postgresql:///lokahi", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
     flask_app.config["SQLALCHEMY_ECHO"] = echo
     flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
