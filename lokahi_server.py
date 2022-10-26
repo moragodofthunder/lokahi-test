@@ -37,7 +37,7 @@ def login_user():
         flash("This email doesn't match anything in our system.")
         return redirect("/login")
     else:
-        session["user_email"]=match.email
+        session["user_id"]=match.user_id
         return redirect(f"/user_profile/{match.user_id}")
 
 
@@ -89,7 +89,7 @@ def create_new_trip():
     end_date = request.form.get("end-date")
 
     trip = crud.create_trip(trip_name, trip_country, trip_city, 
-    start_date, end_date)
+    start_date, end_date, session['user_id'])
     db.session.add(trip)
     db.session.commit()
     
@@ -99,14 +99,14 @@ def create_new_trip():
     
     return redirect(f"/trip_planner/{trip_id}")
 
-@app.route('/trip_planner', methods=['POST'])
-def show_trip_planner():
-    """Return render template for blank_trip_planner.html 
-    without specific trip"""
+# @app.route('/trip_planner', methods=['POST'])
+# def show_trip_planner():
+#     """Return render template for blank_trip_planner.html 
+#     without specific trip"""
 
-    return render_template('blank_trip_planner.html')
+#     return render_template('blank_trip_planner.html')
 
-@app.route('/trip_planner/<trip_id>', methods=['POST'])
+@app.route('/trip_planner/<trip_id>')
 def show_trip_planner_with_trip(trip_id):
     """Return render template to trip_planner.html for specific trip"""
 
