@@ -99,12 +99,12 @@ def create_new_trip():
     
     return redirect(f"/trip_planner/{trip_id}")
 
-# @app.route('/trip_planner', methods=['POST'])
-# def show_trip_planner():
-#     """Return render template for trip_planner.html 
-#     without specific trip"""
+@app.route('/trip_planner', methods=['POST'])
+def show_trip_planner():
+    """Return render template for blank_trip_planner.html 
+    without specific trip"""
 
-#     return render_template('trip_planner.html')
+    return render_template('blank_trip_planner.html')
 
 @app.route('/trip_planner/<trip_id>', methods=['POST'])
 def show_trip_planner_with_trip(trip_id):
@@ -121,7 +121,6 @@ def show_trip_planner_with_trip(trip_id):
     trip_name=trip_name, trip_city=trip_city,
     trip_country=trip_country, start_date=start_date,
     end_date=end_date)
-
 
 
 if __name__ == "__main__":
