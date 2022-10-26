@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Trip Details{% endblock %}
+
+{% block body %}
+
+<div class="trip-details-header">
+    <h1>
+        Trip Details
+    </h1>
+</div>
+
+<div class="trip-title">
+    <h2>
+        {{ trip_name }}
+    </h2>
+</div>
+
+<div class="trip-place">
+    {{ trip_city }} , {{ trip_country }}
+</div>
+
+<div class="itinerary">
+    Itinerary tables by day goes here
+</div>
+
+<div class="saved-places">
+    Saved Places table goes here
+</div>
+
+<div class="edit-trip">
+    <a href="/trip_planner">Go to Trip Planner</a>
+ </div>
+
+<div class="create-trip">
+   <a href="/new_trip">Create a new trip</a>
+</div>
+{% endblock %}

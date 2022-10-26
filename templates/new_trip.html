@@ -5,7 +5,12 @@
 
 <div class="new-trip">
     <h1>Create New Trip:</h1>
-    <form action="/trip_planner/<trip_id>">
+    <form action="/trip_planner" method="POST">
+
+        <p>
+          Trip Name <input type="trip-name" name="trip-name">
+        </p>
+
         <p>
           Country <input type="trip-country" name="trip-country">
         </p>
@@ -15,15 +20,15 @@
         </p>
       
         <p>
-          Start Date <input type="start-date" name="start-date">
+          Start Date <input type="date" id=start-date" name="start-date">
         </p>
       
         <p>
-          End Date <input type="end-date" name="end-date">
+          End Date <input type="date" id="end-date" name="end-date">
         </p>
       
         <p>
-          <input type="submit" value="Create Trip">
+          <input type="submit" value="Create Trip and Start Planning">
         </p>
       </form> 
 </div>

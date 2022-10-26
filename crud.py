@@ -15,9 +15,24 @@ def check_email_and_pass(email, password):
     return User.query.filter(User.password == password, 
                             User.email == email).first()
 
-def get_user_id(email):
-    if User.query.filter(User.email).first() == email:
-        return User.query.filter(User.user_id).first()
+def get_user_by_email(email):
+    return User.query.filter(User.email == email).first()
+
+def get_user_by_id(user_id):
+    return User.query.filter(User.user_id == user_id).first()
+
+def create_trip(trip_name, trip_country, trip_city, start_date, 
+                end_date):
+    """Create trip and return trip."""
+
+    trip = Trip(trip_name=trip_name, trip_country=trip_country,
+            trip_city=trip_city, start_date=start_date, 
+            end_date=end_date)
+
+    return trip
+
+def get_trip_by_id(trip_id):
+    return Trip.query.filter(Trip.trip_id == trip_id).first()
 
 
 if __name__ == '__main__':
